@@ -1,3 +1,13 @@
+<?php
+require __DIR__ . "\db.php";
+
+$stmt = "SELECT id, title, path, description FROM materials";
+$result = $pdo->prepare($stmt);
+$result->execute();
+// while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+//  print_r($row);
+// }
+?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -47,37 +57,16 @@
     <div>
         <div class="container">
             <div class="cards">
+                 <?php foreach ($result as $material): ?>
                 <article class="card">
-                    <img class="card-img" src="img/347218948285436.png" alt="фото товара">
-                    <h3>Карточка 1</h3>
-                    <p>Опиание карточки 1</p>
-                    <button class="card-btn">Подробнее</button>
+                    <img class="card-img" src="/web3/<?= $material['path'] ?>" alt="фото товара">
+                    <h3><?= $material['title'] ?></h3>
+                    <p><?= $material['description'] ?></p>
+                    <a href="/web3/detail.php?id=<?= $material['id'] ?>">Подробнее</a>
+                    <!-- <button class="card-btn">Подробнее</button> -->
                 </article>
-                <article class="card">
-                    <h3>Карточка 2</h3>
-                    <p>Опиание карточки 2</p>
-                    <button>Подробнее</button>
-                </article>
-                <article class="card">
-                    <h3>Карточка 3</h3>
-                    <p>Опиание карточки 3</p>
-                    <button>Подробнее</button>
-                </article>
-                <article class="card">
-                    <h3>Карточка 4</h3>
-                    <p>Опиание карточки 4</p>
-                    <button>Подробнее</button>
-                </article>
-                <article class="card">
-                    <h3>Карточка 5</h3>
-                    <p>Опиание карточки 5</p>
-                    <button>Подробнее</button>
-                </article>
-                <article class="card">
-                    <h3>Карточка 6</h3>
-                    <p>Опиание карточки 6</p>
-                    <button>Подробнее</button>
-                </article>
+                <?php endforeach; ?>
+                
             </div>
         </div>
     </div>
